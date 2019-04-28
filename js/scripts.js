@@ -2,14 +2,14 @@
 
 // Suggested script from Random User Generator
 function randomUserGenerator() {
-$.ajax({
-  url: 'https://randomuser.me/api/?results=12',
-  dataType: 'json',
-  success: function(data) {
-    console.log(data);
-    gallery(data);
-  }
-});
+  $.ajax({
+    url: 'https://randomuser.me/api/?results=12',
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+      gallery(data);
+    }
+  });
 };
 
 randomUserGenerator();
@@ -24,28 +24,30 @@ Search markup:
 **/
 
 function gallery(data) {
+
   data.results.forEach(data => {
-    let $card = $("<div[class='card']></div>");
-    let $cardImgContainer = $("<div[class='card-img-container']></div>");
+    let $card = $("<div></div>").attr('class', "card-info-container");
+    let $cardImgContainer = $("<div></div>").attr('class', "card-img-container");
       $card.append($cardImgContainer);
-    let $img = $("<img[class='card-img']></img>");
-      $img.scr="https://placehold.it/90x90";
-      $img.alt="profile picture";
+    let $img = $("<img></img>").attr('class', "card-img");
+      $img.attr('src', "https://placehold.it/90x90");
+      $img.attr('alt', "profile picture");
       $cardImgContainer.append($img);
-    let $cardInfoContainer = $("<div[class='card-info-container']></div>");
-    let $h3 = $("<h3[id='name']></h3>");
+    let $cardInfoContainer = $("<div ></div>").attr('class', "card-info-container");
+    let $h3 = $("<h3></h3>").attr('id', "name");
       $h3.addClass("card-name cap");
-      $h3.textContent=(`{data.name.first} {data.name.last}`);
+      $h3.textContent=(`${data.name.first} ${data.name.last}`);
+      console.log(data.name.first);
       $cardInfoContainer.append($h3);
-    let $p1 = $("<p[class='card-text']></p>");
-      $p1.textContent=(`{data.email}`);
-    let $p2 = $("<p[class='card-text cap']></p>");
-      $p2.textContent=(`{data.city} + ", " + {data.state}`);
+    let $p1 = $("<p></p>").attr('class', "card-text");
+      $p1.textContent=(`${data.email}`);
+    let $p2 = $("<p></p>").attr('class', "card-text cap");
+      $p2.textContent=(`${data.city} + ", " + ${data.state}`);
       $cardInfoContainer.append($p1);
       $cardInfoContainer.append($p2);
-    document.querySelector('.gallery').append($card);
-  });
-};
+      $("#gallery").append($card);
+    });
+  };
 
 /**
 Gallery markup:
@@ -78,4 +80,30 @@ Modal markup:
             <p class="modal-text">Birthday: 10/21/2015</p>
         </div>
     </div>
+    **/
+
+    /**
+    const users =
+      let $card = $("<div class='card'></div>");
+      let $cardImgContainer = $("<div class='card-img-container'></div>");
+        $card.append($cardImgContainer);
+      let $img = $("<img class='card-img'></img>");
+        $img.scr="https://placehold.it/90x90";
+        $img.alt="profile picture";
+        $cardImgContainer.append($img);
+      let $cardInfoContainer = $("<div class='card-info-container'></div>");
+      let $h3 = $("<h3 id='name'></h3>");
+        $h3.addClass("card-name cap");
+        $h3.textContent=(`{data.name.first} {data.name.last}`);
+        console.log(data.name.first);
+        $cardInfoContainer.append($h3);
+      let $p1 = $("<p class='card-text'></p>");
+        $p1.textContent=(`{data.email}`);
+      let $p2 = $("<p class='card-text cap'></p>");
+        $p2.textContent=(`{data.city} + ", " + {data.state}`);
+        $cardInfoContainer.append($p1);
+        $cardInfoContainer.append($p2)
+      };
+      document.querySelector('.gallery') +=($card);
+    });
     **/
