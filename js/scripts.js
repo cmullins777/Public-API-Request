@@ -25,25 +25,25 @@ Search markup:
 
 function gallery(data) {
   data.results.forEach(data => {
-    let $card = $("div[class='card']");
-    let $cardImgContainer = $("div[class='card-img-container']");
+    let $card = $("<div[class='card']></div>");
+    let $cardImgContainer = $("<div[class='card-img-container']></div>");
       $card.append($cardImgContainer);
-    let $img = $("img[class='card-img']");
+    let $img = $("<img[class='card-img']></img>");
       $img.scr="https://placehold.it/90x90";
       $img.alt="profile picture";
       $cardImgContainer.append($img);
-    let $cardInfoContainer = $("div[class='card-info-container']");
-    let $h3 = $("h3[id='name']");
+    let $cardInfoContainer = $("<div[class='card-info-container']></div>");
+    let $h3 = $("<h3[id='name']></h3>");
       $h3.addClass("card-name cap");
-      $h3.textContent=(`{data.results.first}{data.results.last}`);
+      $h3.textContent=(`{data.name.first} {data.name.last}`);
       $cardInfoContainer.append($h3);
-    let $p1 = $("p[class='card-text']");
-      $p1.textContent=(`{data.results.email}`);
-    let $p2 = $("p[class='card-text cap']");
-      $p2.textContent=(`{data.results.city} + ", " + {data.results.state}`);
+    let $p1 = $("<p[class='card-text']></p>");
+      $p1.textContent=(`{data.email}`);
+    let $p2 = $("<p[class='card-text cap']></p>");
+      $p2.textContent=(`{data.city} + ", " + {data.state}`);
       $cardInfoContainer.append($p1);
       $cardInfoContainer.append($p2);
-    document.querySelector('.gallery').append($card);  
+    document.querySelector('.gallery').append($card);
   });
 };
 
