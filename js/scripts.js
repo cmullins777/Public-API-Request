@@ -26,18 +26,20 @@ Search markup:
 function gallery(data) {
 
   data.results.forEach(data => {
-    let $card = $("<div></div>").attr('class', "card-info-container");
+    let $card = $("<div></div>");
     let $cardImgContainer = $("<div></div>").attr('class', "card-img-container");
       $card.append($cardImgContainer);
+      console.log($card);
     let $img = $("<img></img>").attr('class', "card-img");
-      $img.attr('src', "https://placehold.it/90x90");
+      $img.attr('src', `${data.picture.large}`);
       $img.attr('alt', "profile picture");
       $cardImgContainer.append($img);
-    let $cardInfoContainer = $("<div ></div>").attr('class', "card-info-container");
+    let $cardInfoContainer = $("<div></div>").attr('class', "card-info-container");
+      $cardImgContainer.append($cardInfoContainer);
     let $h3 = $("<h3></h3>").attr('id', "name");
-      $h3.addClass("card-name cap");
+      $h3.attr('class', "card-name cap");
       $h3.textContent=(`${data.name.first} ${data.name.last}`);
-      console.log(data.name.first);
+      console.log($h3);
       $cardInfoContainer.append($h3);
     let $p1 = $("<p></p>").attr('class', "card-text");
       $p1.textContent=(`${data.email}`);
@@ -83,27 +85,27 @@ Modal markup:
     **/
 
     /**
-    const users =
-      let $card = $("<div class='card'></div>");
-      let $cardImgContainer = $("<div class='card-img-container'></div>");
+    data.results.forEach(data => {
+      let $card = $("<div></div>").attr('class', "card-info-container");
+      let $cardImgContainer = $("<div></div>").attr('class', "card-img-container");
         $card.append($cardImgContainer);
-      let $img = $("<img class='card-img'></img>");
-        $img.scr="https://placehold.it/90x90";
-        $img.alt="profile picture";
+      let $img = $("<img></img>").attr('class', "card-img");
+        $img.attr('src', `${data.picture.large}`);
+        $img.attr('alt', "profile picture");
         $cardImgContainer.append($img);
-      let $cardInfoContainer = $("<div class='card-info-container'></div>");
-      let $h3 = $("<h3 id='name'></h3>");
-        $h3.addClass("card-name cap");
-        $h3.textContent=(`{data.name.first} {data.name.last}`);
-        console.log(data.name.first);
+      let $cardInfoContainer = $("<div></div>").attr('class', "card-info-container");
+      let $h3 = $("<h3></h3>").attr('id', "name");
+        $h3.attr('class', "card-name cap");
+        $h3.textContent=(`${data.name.first} ${data.name.last}`);
         $cardInfoContainer.append($h3);
-      let $p1 = $("<p class='card-text'></p>");
-        $p1.textContent=(`{data.email}`);
-      let $p2 = $("<p class='card-text cap'></p>");
-        $p2.textContent=(`{data.city} + ", " + {data.state}`);
+        console.log($cardInfoContainer);
+      let $p1 = $("<p></p>").attr('class', "card-text");
+        $p1.textContent=(`${data.email}`);
+      let $p2 = $("<p></p>").attr('class', "card-text cap");
+        $p2.textContent=(`${data.city} + ", " + ${data.state}`);
         $cardInfoContainer.append($p1);
-        $cardInfoContainer.append($p2)
-      };
-      document.querySelector('.gallery') +=($card);
-    });
+        $cardInfoContainer.append($p2);
+        $("#gallery").append($card);
+      });
+    };
     **/
