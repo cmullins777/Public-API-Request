@@ -8,6 +8,7 @@ function randomUserGenerator() {
     success: function(data) {
       console.log(data);
       gallery(data);
+      modal(data);
     }
   });
 };
@@ -24,46 +25,52 @@ Search markup:
 **/
 
 function gallery(data) {
-
   data.results.forEach(data => {
-    let $card = $("<div></div>");
-    let $cardImgContainer = $("<div></div>").attr('class', "card-img-container");
-      $card.append($cardImgContainer);
-      console.log($card);
-    let $img = $("<img></img>").attr('class', "card-img");
-      $img.attr('src', `${data.picture.large}`);
-      $img.attr('alt', "profile picture");
-      $cardImgContainer.append($img);
-    let $cardInfoContainer = $("<div></div>").attr('class', "card-info-container");
-      $cardImgContainer.append($cardInfoContainer);
-    let $h3 = $("<h3></h3>").attr('id', "name");
-      $h3.attr('class', "card-name cap");
-      $h3.textContent=(`${data.name.first} ${data.name.last}`);
-      console.log($h3);
-      $cardInfoContainer.append($h3);
-    let $p1 = $("<p></p>").attr('class', "card-text");
-      $p1.textContent=(`${data.email}`);
-    let $p2 = $("<p></p>").attr('class', "card-text cap");
-      $p2.textContent=(`${data.city} + ", " + ${data.state}`);
-      $cardInfoContainer.append($p1);
-      $cardInfoContainer.append($p2);
-      $("#gallery").append($card);
+    const users =
+      `<div class="card">
+         <div class="card-img-container">
+           <img class="card-img" src="${data.picture.large}" alt="profile picture">
+         </div>
+         <div class="card-info-container">
+           <h3 id="name" class="card-name cap">${data.name.first} ${data.name.last}</h3>
+           <p class="card-text">${data.email}</p>
+           <p class="card-text cap">${data.location.city}, ${data.location.state}</p>
+         </div>
+       </div>`;
+       $("#gallery").append(users);
     });
   };
 
-/**
-Gallery markup:
-<div class="card">
-    <div class="card-img-container">
-        <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
-    </div>
-    <div class="card-info-container">
-        <h3 id="name" class="card-name cap">first last</h3>
-        <p class="card-text">email</p>
-        <p class="card-text cap">city, state</p>
-    </div>
-</div>
-**/
+function modal(data) {
+  let card = $("div[class='card']");
+  console.log(card);
+
+  for (var i = 0; i < card.length; i++) {
+   (function(i) {
+    card[i].addEventListener("click", function() {
+    const modal_user =
+      `<div class="modal-container">
+          <div class="modal">
+              <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+              <div class="modal-info-container">
+                  <img class="modal-img" src="${data.results[i].picture.large}" alt="profile picture">
+                  <h3 id="name" class="modal-name cap">${data.results[i].name.first} ${data.results[i].name.last}</h3>
+                  <p class="modal-text">${data.email}</p>
+                  <p class="modal-text cap">${data.results[i].location.city}</p>
+                  <hr>
+                  <p class="modal-text">${data.cell}</p>
+                  <p class="modal-text">${data.results[i].location.street} ${data.results[i].location.city} ${data.results[i].location.state} ${data.results[i].location.postcode}</p>
+                  <p class="modal-text">${data.results[i].dob.date}</p>
+              </div>
+          </div>
+      </div>`;
+      document.querySelector('body').innerHTML += modal;
+      $("#gallery").append(modal_user);
+        })
+    })(i);
+  }
+};
+
 
 /**
 Modal markup:
