@@ -1,6 +1,8 @@
 
 
-// Suggested script from Random User Generator
+// Use suggested ajax call from Random User Generator
+// Add function calls gallery (to load 12 users' cards) and modal (to feature selected user in pop-up window)
+// function calls only run if ajax call is successful so .then() not required
 function randomUserGenerator() {
   $.ajax({
     url: 'https://randomuser.me/api/?results=12',
@@ -13,17 +15,10 @@ function randomUserGenerator() {
   });
 };
 
+// Calls function above
 randomUserGenerator();
-/**
-Search markup:
 
-
-<form action="#" method="get">
-    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-</form>
-**/
-
+// Display API data for each user using html markup template literals
 function gallery(data) {
   data.results.forEach(data => {
     const users =
@@ -37,82 +32,41 @@ function gallery(data) {
            <p class="card-text cap">${data.location.city}, ${data.location.state}</p>
          </div>
        </div>`;
+// Append user data for 12 employees to div with ID of gallery
        $("#gallery").append(users);
     });
   };
 
+// Create modal pop-up window for selected user with html markup template literals
 function modal(data) {
-  let card = $("div[class='card']");
-  console.log(card);
-
+  let card = $(".card");
+// Iterate through cards to get data for selected card[i]
   for (var i = 0; i < card.length; i++) {
-   (function(i) {
+    ((i) => {
     card[i].addEventListener("click", function() {
     const modal_user =
       `<div class="modal-container">
           <div class="modal">
-              <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
               <div class="modal-info-container">
-                  <img class="modal-img" src="${data.results[i].picture.large}" alt="profile picture">
+                <img class="modal-img" src="${data.results[i].picture.large}" alt="profile picture">
                   <h3 id="name" class="modal-name cap">${data.results[i].name.first} ${data.results[i].name.last}</h3>
-                  <p class="modal-text">${data.email}</p>
+                  <p class="modal-text">${data.results[i].email}</p>
                   <p class="modal-text cap">${data.results[i].location.city}</p>
                   <hr>
-                  <p class="modal-text">${data.cell}</p>
-                  <p class="modal-text">${data.results[i].location.street} ${data.results[i].location.city} ${data.results[i].location.state} ${data.results[i].location.postcode}</p>
-                  <p class="modal-text">${data.results[i].dob.date}</p>
+                  <p class="modal-text">${data.results[i].cell}</p>
+                  <p class="modal-text cap">${data.results[i].location.street} ${data.results[i].location.city} ${data.results[i].location.state} ${data.results[i].location.postcode}</p>
+                  <p class="modal-text">Birthday: ${data.results[i].dob.date.slice(0,10)}</p>
               </div>
           </div>
       </div>`;
-      document.querySelector('body').innerHTML += modal;
-      $("#gallery").append(modal_user);
-        })
+// Append selected user's modal window to div with ID of gallery
+    $("#gallery").append(modal_user);
+// Close modal window when X button is clicked
+    $('#modal-close-btn').on('click', ()=> {
+      $('.modal-container').hide();
+    });
+    });
     })(i);
-  }
+  };
 };
-
-
-/**
-Modal markup:
-
-<div class="modal-container">
-    <div class="modal">
-        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-        <div class="modal-info-container">
-            <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-            <h3 id="name" class="modal-name cap">name</h3>
-            <p class="modal-text">email</p>
-            <p class="modal-text cap">city</p>
-            <hr>
-            <p class="modal-text">(555) 555-5555</p>
-            <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-            <p class="modal-text">Birthday: 10/21/2015</p>
-        </div>
-    </div>
-    **/
-
-    /**
-    data.results.forEach(data => {
-      let $card = $("<div></div>").attr('class', "card-info-container");
-      let $cardImgContainer = $("<div></div>").attr('class', "card-img-container");
-        $card.append($cardImgContainer);
-      let $img = $("<img></img>").attr('class', "card-img");
-        $img.attr('src', `${data.picture.large}`);
-        $img.attr('alt', "profile picture");
-        $cardImgContainer.append($img);
-      let $cardInfoContainer = $("<div></div>").attr('class', "card-info-container");
-      let $h3 = $("<h3></h3>").attr('id', "name");
-        $h3.attr('class', "card-name cap");
-        $h3.textContent=(`${data.name.first} ${data.name.last}`);
-        $cardInfoContainer.append($h3);
-        console.log($cardInfoContainer);
-      let $p1 = $("<p></p>").attr('class', "card-text");
-        $p1.textContent=(`${data.email}`);
-      let $p2 = $("<p></p>").attr('class', "card-text cap");
-        $p2.textContent=(`${data.city} + ", " + ${data.state}`);
-        $cardInfoContainer.append($p1);
-        $cardInfoContainer.append($p2);
-        $("#gallery").append($card);
-      });
-    };
-    **/
